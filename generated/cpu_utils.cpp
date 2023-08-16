@@ -5,8 +5,6 @@ void output_cpu_util_stat_mode(std::ostream& response, const std::string& static
 	response << "# HELP " << name << " " << help << std::endl;
 	response << "# TYPE " << name << " " << type << std::endl;
 
-
-    std::cout << "cpu_util getting name " <<  name  << std::endl;
 	for(size_t i=0; i<cpu_util_count; i++) {
 	    double value = func(cpu_utils[i]);
 	    // This detects NAN
@@ -14,8 +12,6 @@ void output_cpu_util_stat_mode(std::ostream& response, const std::string& static
 	    {
             continue;
 	    }
-
-        std::cout << "cpu_util index " <<  i  << std::endl;
 		response << name << "{id=\"" << cpu_utils[i].cpu_id << "\",";
         response <<  static_labels << "} " << value << std::endl;
 	}
@@ -104,14 +100,7 @@ void gather_cpu_utils(std::ostream& response, const std::string& static_labels) 
     output_cpu_util_stat_mode(response, static_labels, "aix_cpu_util_physical_consumed", "gauge", "total processors used up by the partition", cpu_utils, cpu_count, [](perfstat_cpu_util_t& cpu_util) { return cpu_util.physical_consumed; });
 
 
-    std::cout << "delete oldt"  << std::endl;
     delete [] oldt;
-
-    std::cout << "delete newt"  << std::endl;
     delete [] newt;
-
-    std::cout << "delete cpu_utils"  << std::endl;
     delete [] cpu_utils;
-
-    std::cout << "done"  << std::endl;
 }

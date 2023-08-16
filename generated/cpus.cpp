@@ -4,10 +4,7 @@ void output_cpu_stat_mode(std::ostream& response, const std::string& static_labe
 	response << "# HELP " << name << " " << help << std::endl;
 	response << "# TYPE " << name << " " << type << std::endl;
 
-    std::cout << "cpu getting name " <<  name  << std::endl;
-
 	for(size_t i=0; i<cpu_count; i++) {
-        std::cout << "cpu index " <<  i  << std::endl;
 		response << name << "{cpu=\"" << cpus[i].name << "\",";
         response << static_labels << "} " << func(cpus[i]) << std::endl;
 	}

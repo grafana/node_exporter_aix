@@ -44,9 +44,9 @@ int start_server(int port, int flags) {
 		if(flags & PART_VMSTAT_V)     gather_vmstat_v(output, static_labels);
 		if(flags & PART_FCSTAT_E)     gather_fcstats(output, static_labels);
         if(flags & PART_CPU_UTILS)    gather_cpu_utils(output, static_labels);
+        if(flags & PART_PROCESS)      gather_process(output, static_labels);
 
         auto outstr = output.str();
-		std::cout << outstr << std::endl;
 		*response << "HTTP/1.1 200 OK\r\nContent-Length: " << outstr.length() << "\r\n\r\n"
 			<< outstr;
 	};
