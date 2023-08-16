@@ -15,6 +15,7 @@
 #define PART_FILESYSTEMS  (1<<11)
 #define PART_VMSTAT_V     (1<<11)
 #define PART_FCSTAT_E     (1<<12)
+#define PART_CPU_UTILS      (1<<13)
 
 extern int start_server(int port, int flags);
 
@@ -35,6 +36,8 @@ extern void gather_partition(std::ostream& response, const std::string& static_l
 extern void gather_filesystems(std::ostream& response, const std::string& static_labels);
 extern void gather_vmstat_v(std::ostream& response, const std::string& static_labels);
 extern void gather_fcstats(std::ostream& response, const std::string& static_labels);
+extern void gather_cpu_utils(std::ostream& response, const std::string& static_labels);
+
 
 struct mountpoint {
 	std::string mountpoint;

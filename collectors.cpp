@@ -166,3 +166,4 @@ int perfstat_fcstat(perfstat_id_t *name,
 #include "generated/netbuffers.cpp"
 #include "generated/partition.cpp"
 #include "generated/fcstats.cpp"
+#include "generated/cpu_utils.cpp"

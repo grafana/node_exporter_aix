@@ -1,0 +1,4 @@
+name id
+strcpy(firstcpu.name, FIRST_CPU)
+gauge	physical_busy			physical processors busy.
+gauge	physical_consumed				total processors used up by the partition
