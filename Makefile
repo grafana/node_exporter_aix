@@ -1,4 +1,5 @@
-GIT_VERSION := $(shell git --no-pager describe --tags --always --long | sed "s/v\(.*\)-\([0-9]*\)-.*/\1.\2/")
+#GIT_VERSION := $(shell git --no-pager describe --tags --always --long | sed "s/v\(.*\)-\([0-9]*\)-.*/\1.\2/")
+GIT_VERSION := 1.16.0.0
 
 all: build/node_exporter_aix
 
