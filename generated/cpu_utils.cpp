@@ -6,14 +6,17 @@ void output_cpu_util_stat_mode(std::ostream& response, const std::string& static
 	response << "# TYPE " << name << " " << type << std::endl;
 
 	for(size_t i=0; i<cpu_util_count; i++) {
-	    double value = func(cpu_utils[i]);
+	    float value = func(cpu_utils[i]);
+	        std::cout << value  << std::endl;
+
 	    // This detects NAN
 	    if (isnan(value))
 	    {
-            continue;
+            	continue;
 	    }
+
 		response << name << "{id=\"" << cpu_utils[i].cpu_id << "\",";
-        response <<  static_labels << "} " << value << std::endl;
+        response <<  static_labels << "} " << std::fixed << std::setprecision(8) <<  value << std::endl;
 	}
 }
 
@@ -56,7 +59,7 @@ void gather_cpu_utils(std::ostream& response, const std::string& static_labels) 
     data.prevstat= oldt;
     data.sizeof_data = sizeof(perfstat_cpu_t);
     data.prev_elems = cpu_count;
-    sleep(1);
+    sleep(5);
     /* Check how many perfstat_cpu_t structures are available after a defined period */
     cpu_count = perfstat_cpu(NULL, NULL,sizeof(perfstat_cpu_t),0);
 
@@ -96,10 +99,12 @@ void gather_cpu_utils(std::ostream& response, const std::string& static_labels) 
         return;
     }
 
+        std::streamsize ss = std::cout.precision();
     output_cpu_util_stat_mode(response, static_labels, "aix_cpu_util_physical_busy", "gauge", "physical processors busy.", cpu_utils, cpu_count, [](perfstat_cpu_util_t& cpu_util) { return cpu_util.physical_busy; });
     output_cpu_util_stat_mode(response, static_labels, "aix_cpu_util_physical_consumed", "gauge", "total processors used up by the partition", cpu_utils, cpu_count, [](perfstat_cpu_util_t& cpu_util) { return cpu_util.physical_consumed; });
 
-
+    response << std::setprecision(ss) << std::endl;
+    response.unsetf(std::ios_base::fixed);
     delete [] oldt;
     delete [] newt;
     delete [] cpu_utils;
